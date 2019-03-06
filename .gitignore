@@ -1,0 +1,13 @@
+output/
+*~
+build/
+class
+*.prof
+*.ini
+libclass.a
+*out
+python/classy.c
+*.pyc
+python/build/
+RealSpaceInterface/cache/
+.DS_Store
