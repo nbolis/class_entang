@@ -21,7 +21,7 @@ try :
     n_s           = float(sys.argv[3])
     r             = float(sys.argv[4])
     alpha         = float(sys.argv[5])
-    beta          = float(sys.argv[6])
+   # gamma          = float(sys.argv[6])
 
 # Error control, no need to touch
 except IndexError :
@@ -33,8 +33,10 @@ except ValueError :
 # 2. The function giving P(k), including the necessary import statements.
 #    Inside this function, you can use the parameters named in the previous step.
 
+#### Pk for simple entangled case SEn, only anihilation operators from the two fields mixing, and massless spectator. Here |gamma|^2 = 1-|alpha|^2
+##   epsilon slow roll parameter is calculated as r/16 for now. 
 def P(k) :
-    return (alpha**2 ) * A * (k/k_0)**(n_s-1.) + (beta**2) * A * ((k/k_0)**(- r/8.0))- 2.0* alpha * beta * A * (k/k_0)**(-(n_s-1.)- 5.0 * r /16.0)
+    return (alpha**2 ) * A * (k/k_0)**(n_s-1.) + (1-alpha**2) * A * ((k/k_0)**(- r/8.0))+ 2.0* alpha * np.sqrt(1-alpha**2)* A * (k/k_0)**(-(n_s-1.)- 5.0 * r /16.0)
 
 # 3. Limits for k and precision:
 #    Check that the boundaries are correct for your case.

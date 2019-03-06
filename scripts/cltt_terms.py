@@ -30,15 +30,17 @@ plt.rcParams["figure.figsize"] = [8.0,6.0]
 #############################################
 #
 # Cosmological parameters and other CLASS parameters
-#
+#   custom1 = pivot scale k_0, custom2= amplitude A, custom3 = spectral index n_s, custom4= tensor to scalar ratio r
+#   custom5 = alpha, custom6 =  beta
+
 common_settings_entang = {
     'command' : 'python /Users/N7/class_public-master/external_Pk/generate_Pk_entang.py',
-    'custom1' : 0.05,
+    'custom1' : 0.05,    
     'custom2' : 2.215e-9,
     'custom3' : 0.9624,
     'custom4' : 0.1,
-    'custom5' : 0.01,
-    'custom6' : 0.3,
+    'custom5' : 0.1,
+  #  'custom6' : 0.3,
     'h' : 0.67556,
     'T_cmb' : 2.7255,
     'omega_b' : 0.022032,
