@@ -30,17 +30,18 @@ plt.rcParams["figure.figsize"] = [8.0,6.0]
 #############################################
 #
 # Cosmological parameters and other CLASS parameters
-#   custom1 = pivot scale k_0, custom2= amplitude A, custom3 = spectral index n_s, custom4= tensor to scalar ratio r
-#   custom5 = alpha, custom6 =  beta
+#   custom1 = pivot scale k_0, custom2= amplitude A, custom3 = spectral index n_s, custom4= mu, specator field hankel funciton order
+#   custom5 = alpha magnitude for SEn, custom6. must be <1 =  theta, bogolioubov phase, custom7 =  delta, bogoloiubov magnitude for MEn
 
 common_settings_entang = {
     'command' : 'python /Users/N7/class_public-master/external_Pk/generate_Pk_entang.py',
     'custom1' : 0.05,    
     'custom2' : 2.215e-9,
     'custom3' : 0.9624,
-    'custom4' : 0.1,
-    'custom5' : 0.1,
-  #  'custom6' : 0.3,
+    'custom4' : 1.5,
+    'custom5' : 0.01,
+    'custom6' : 0.9,
+    'custom7' : 0.01,
     'h' : 0.67556,
     'T_cmb' : 2.7255,
     'omega_b' : 0.022032,
@@ -92,6 +93,17 @@ common_settings = {# wich output? ClTT, transfer functions delta_i and theta_i
 #
 # call CLASS
 #
+
+### normal one #####
+M = Class()
+M.set(common_settings)
+M.compute()
+cl_tot_normal = M.raw_cl(3000)
+cl_lensed_normal = M.lensed_cl(3000)
+M.struct_cleanup()  # clean output
+M.empty()      
+
+
 M = Class()
 M.set(common_settings_entang)
 M.compute()
@@ -132,6 +144,10 @@ cl_dop = M.raw_cl(3000)
 #
 #################
 #
+
+## comparing regular and entangled
+
+
 plt.xlim([2,3000])
 plt.xlabel(r"$\ell$")
 plt.ylabel(r"$\ell (\ell+1) C_l^{TT} / 2 \pi \,\,\, [\times 10^{10}]$")
@@ -139,12 +155,26 @@ plt.grid()
 #
 ell = cl_tot['ell']
 factor = 1.e10*ell*(ell+1.)/2./math.pi
-plt.semilogx(ell,factor*cl_tsw['tt'],'c-',label=r'$\mathrm{T+SW}$')
-plt.semilogx(ell,factor*cl_eisw['tt'],'r-',label=r'$\mathrm{early-ISW}$')
-plt.semilogx(ell,factor*cl_lisw['tt'],'y-',label=r'$\mathrm{late-ISW}$')
-plt.semilogx(ell,factor*cl_dop['tt'],'g-',label=r'$\mathrm{Doppler}$')
+
 plt.semilogx(ell,factor*cl_tot['tt'],'r-',label=r'$\mathrm{total}$')
-plt.semilogx(ell,factor*cl_lensed['tt'],'k-',label=r'$\mathrm{lensed}$')
+plt.semilogx(ell,factor*cl_tot_normal['tt'],'k-',label=r'$\mathrm{tot norm}$')
+
+
+
+#plt.xlim([2,3000])
+
+#plt.xlabel(r"$\ell$")
+#plt.ylabel(r"$\ell (\ell+1) C_l^{TT} / 2 \pi \,\,\, [\times 10^{10}]$")
+#plt.grid()
+#
+#ell = cl_tot['ell']
+#factor = 1.e10*ell*(ell+1.)/2./math.pi
+#plt.semilogx(ell,factor*cl_tsw['tt'],'c-',label=r'$\mathrm{T+SW}$')
+#plt.semilogx(ell,factor*cl_eisw['tt'],'r-',label=r'$\mathrm{early-ISW}$')
+#plt.semilogx(ell,factor*cl_lisw['tt'],'y-',label=r'$\mathrm{late-ISW}$')
+#plt.semilogx(ell,factor*cl_dop['tt'],'g-',label=r'$\mathrm{Doppler}$')
+#plt.semilogx(ell,factor*cl_tot['tt'],'r-',label=r'$\mathrm{total}$')
+#plt.semilogx(ell,factor*cl_lensed['tt'],'k-',label=r'$\mathrm{lensed}$')
 #
 plt.legend(loc='right',bbox_to_anchor=(1.4, 0.5))
 
