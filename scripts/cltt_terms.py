@@ -30,18 +30,27 @@ plt.rcParams["figure.figsize"] = [8.0,6.0]
 #############################################
 #
 # Cosmological parameters and other CLASS parameters
-#   custom1 = pivot scale k_0, custom2= amplitude A, custom3 = spectral index n_s, custom4= mu, specator field hankel funciton order
-#   custom5 = alpha magnitude for SEn, custom6. must be <1 =  theta, bogolioubov phase, custom7 =  delta, bogoloiubov magnitude for MEn
+#   custom1 = pivot scale k_0, 
+#   custom2= amplitude A_s, 
+#   custom3 = spectral index n_s,
+#   custom4= mu, specator field hankel funciton order,
+#   custom5 = alpha magnitude for SEn, 
+#   custom6. must be <1 =  theta, bogolioubov phase, 
+#   custom7 =  delta, bogoloiubov magnitude for MEn,
+#   custom2= amplitude A_t, 
+#   custom3 = tensor spectral index n_t
 
 common_settings_entang = {
-    'command' : 'python /Users/N7/class_public-master/external_Pk/generate_Pk_entang.py',
+    'command' : '../external_Pk/generate_Pk_entang_w_tensors.py',
     'custom1' : 0.05,    
     'custom2' : 2.215e-9,
     'custom3' : 0.9624,
     'custom4' : 1.5,
-    'custom5' : 0.01,
-    'custom6' : 0.9,
+    'custom5' : 1.0,
+    'custom6' : 0.001, #1.5708,
     'custom7' : 0.01,
+    'custom8' : 2.215e-9,
+    'custom9' : 9.624,
     'h' : 0.67556,
     'T_cmb' : 2.7255,
     'omega_b' : 0.022032,
@@ -85,6 +94,10 @@ common_settings = {# wich output? ClTT, transfer functions delta_i and theta_i
                    'A_s':2.215e-9,
                    'n_s':0.9619,
                    'tau_reio':0.0925,
+                   'r' : 0.1,
+                   'n_t' : 'scc',        
+                   'alpha_t' : 'scc',
+                   'modes' : 's,t',
                    # Take fixed value for primordial Helium (instead of automatic BBN adjustment)
                    'YHe':0.246,
                    # other output and precision parameters

@@ -16,14 +16,17 @@ import numpy as np
 #    "sys.argv[1]" corresponds to "custom1" in Class, an so on
 
 try :
+
     k_0           = float(sys.argv[1])
-    A             = float(sys.argv[2])
+    A_s             = float(sys.argv[2])
     n_s           = float(sys.argv[3])
     mu            = float(sys.argv[4])                
     alpha         = float(sys.argv[5])                 # bogoloubov parameter magnitude
     theta         = float(sys.argv[6])                 # theta_alpha + theta_gamma   phases of bogolioubov 
-    delta         = float(sys.argv[7])                 # delta bogolioubov parameter amplitude              
-   # gamma          = float(sys.argv[6])
+    delta         = float(sys.argv[7])                 # delta bogolioubov parameter amplitude     
+
+    A_t           = float(sys.argv[8])
+    n_t           = float(sys.argv[9])
 
 # Error control, no need to touch
 except IndexError :
@@ -34,27 +37,26 @@ except ValueError :
 
 # 2. The function giving P(k), including the necessary import statements.
 #    Inside this function, you can use the parameters named in the previous step.
-
 #### Pk for simple entangled case SEn, only anihilation operators from the two fields mixing, and massless spectator. Here |gamma|^2 = 1-|alpha|^2
 
-def P(k) :
-    return A * ((alpha**2) *  (k/k_0)**(n_s-1.) + (1.-alpha**2) *  (k/k_0)**(3.- 2.* mu)+ 2.0* alpha * np.sqrt(1.-alpha**2) * np.cos(theta)* (k/k_0)**(0.5 * n_s +1. - mu ))
+def P_s(k) :
+    return A_s * ((alpha**2) *  (k/k_0)**(n_s-1.) + (1.-alpha**2) *  (k/k_0)**(3.- 2.* mu)+ 2.0* alpha * np.sqrt(1.-alpha**2) * np.cos(theta)* (k/k_0)**(0.5 * n_s +1. - mu ))
 
 #### Pk for mixed entangled case MEn, creation and anihilation operators from the two fields mixing, and massless spectator. Here |delta|^2 = -1+|alpha|^2
 
-#def P(k) :
+#def P_s(k) :
  #   return A * (np.sqrt(1. + delta**2) *  (k/k_0)**(n_s-1.) + (delta**2) *  (k/k_0)**(3.- 2.* mu) - 2.0* delta * np.sqrt(delta**2 + 1.) * np.cos(theta)* (k/k_0)**(0.5 * n_s +1. - mu ))
 
 
-def P(k) :
-    return A * ((alpha**2) *  (k/k_0)**(n_s-1.) + (1.-alpha**2) *  (k/k_0)**(3.- 2.* mu)+ 2.0* alpha * np.sqrt(1.-alpha**2) * np.cos(theta)* (k/k_0)**(0.5 * n_s +1. - mu ))
 
+def P_t(k) :
+    return A_t * (k/k_0)**(n_t)
 
 # 3. Limits for k and precision:
 #    Check that the boundaries are correct for your case.
 #    It is safer to set k_per_decade primordial slightly bigger than that of Class.
 
-k_min = 1.e-6
+k_min  = 1.e-6
 k_max  = 10.
 k_per_decade_primordial = 200.
 
@@ -69,6 +71,5 @@ while ks[-1] <= float(k_max) :
 
 # Filling the array of Pk's
 for k in ks :
-    P_k = P(k)
-    print("%.18g %.18g" % (k, P_k))
+    print("%.18g %.18g %.18g" % (k, P_s(k), P_t(k)))
 
